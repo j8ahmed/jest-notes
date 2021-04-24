@@ -1,14 +1,20 @@
 # Jest Mock Functions
 
-This section covers details and examples regarding the Jest Mock Function, Mocking modules, ```jest.spyOn```, etc.
+This section covers details and examples regarding the Jest Mock Function, Mocking modules with ```jest.mock()``` & manual mocks, ```jest.spyOn```,  etc.
 
 ---
 
-## The ```mockFunction.mock``` Property
-
+## ```jest.fn()``` (Mock Function Properties / Methods)
 <br/>
 
-Every mock function has access to unique properties and methods that help us keep track of it's usage during tests. Specifically, the ```.mock``` property is an object that holds information related each respective mock function's call history. This information includes:
+Every mock function has access to unique properties and methods that help us keep track of it's usage during tests. 
+<br/>
+<br/>
+
+### ```MockFunction.mock``` property
+---
+
+Specifically, the ```.mock``` property is an object that holds information related each respective mock function's call history. This information includes:
 
 - The parameter's it was called with (```.calls```),
 - The instances derived from the mock function (```.instances```), e.g., ```new mockFn()```
@@ -20,7 +26,6 @@ Every mock function has access to unique properties and methods that help us kee
 const mockFn = jest.fn()
 mockFn("Hello")
 console.log(mockFn.mock)
-<br/>
 ```
 
 Prints:
@@ -57,3 +62,107 @@ Prints:
         - ```.value```<br/>
                 The value that was thrown or returned. 
                     value is ```undefined``` when ```type === 'incomplete'```.
+<br/>
+<br/>
+### Other Mock Function Properties / Methods
+---
+
+When we build a mock function and then console log it, we can see that it is a JavaScript Function object with unique properties. A lot of these functions are fairly self-explanatory so we will only highlight the most frequently used methods / properties.
+
+```javascript
+const mockFn = jest.fn()
+console.log(mockFn)
+```
+
+Prints:
+```
+ console.log
+    [Function: app$load$anim] {
+      _isMockFunction: true,
+      getMockImplementation: [Function (anonymous)],
+      mock: [Getter/Setter],
+      mockClear: [Function (anonymous)],
+      mockReset: [Function (anonymous)],
+      mockRestore: [Function (anonymous)],
+      mockReturnValueOnce: [Function (anonymous)],
+      mockResolvedValueOnce: [Function (anonymous)],
+      mockRejectedValueOnce: [Function (anonymous)],
+      mockReturnValue: [Function (anonymous)],
+      mockResolvedValue: [Function (anonymous)],
+      mockRejectedValue: [Function (anonymous)],
+      mockImplementationOnce: [Function (anonymous)],
+      mockImplementation: [Function (anonymous)],
+      mockReturnThis: [Function (anonymous)],
+      mockName: [Function (anonymous)],
+      getMockName: [Function (anonymous)]
+    }
+```
+
+```._isMockFunction``` true,
+
+```.getMockImplementation``` [Function (anonymous)],
+
+```.mock``` [Getter/Setter],
+
+```.mockClear``` [Function (anonymous)],
+
+```.mockReset``` [Function (anonymous)],
+
+```.mockRestore``` [Function (anonymous)],
+
+```.mockReturnValueOnce``` [Function (anonymous)],
+
+```.mockResolvedValueOnce``` [Function (anonymous)],
+
+```.mockRejectedValueOnce``` [Function (anonymous)],
+
+```.mockReturnValue``` [Function (anonymous)],
+
+```.mockResolvedValue``` [Function (anonymous)],
+
+```.mockRejectedValue``` [Function (anonymous)],
+
+```.mockImplementationOnce``` [Function (anonymous)],
+
+```.mockImplementation``` [Function (anonymous)],
+
+```.mockReturnThis``` [Function (anonymous)],
+
+```.mockName``` [Function (anonymous)],
+
+```.getMockName``` [Function (anonymous)]
+<br/>
+<br/>
+
+---
+<br/>
+
+### ```jest.mock( modulePathName, factory?, options? )```
+
+
+
+
+### ```jest.spyOn( object, methodName, accessType? )```
+
+- object = The ES6 module object that we want to 
+
+
+<br/>
+
+---
+
+<br/>
+<br/>
+
+### TypeScript considerations
+
+There are multiple little quirks involved when using TypeScript with Jest since it only recently started to support TypeScript.
+<br/><br/>
+
+#### **Access Mocked function properties / methods on mocked module functions or mocked class methods**
+
+Example:
+<br/>
+```typescript
+const mockedModule = ModuleName as jest.Mocked<typeof ModuleName>
+```
