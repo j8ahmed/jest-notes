@@ -159,10 +159,25 @@ Prints:
 There are multiple little quirks involved when using TypeScript with Jest since it only recently started to support TypeScript.
 <br/><br/>
 
-#### **Access Mocked function properties / methods on mocked module functions or mocked class methods**
+#### **Access Mocked function properties / methods on a mocked module object or mocked class without errors in TypeScript**
 
 Example:
 <br/>
 ```typescript
+import ModuleName from './moduleName'
+jest.mock('./moduleName')
+
 const mockedModule = ModuleName as jest.Mocked<typeof ModuleName>
+```
+<br/><br/>
+
+#### **Access Mocked function properties / methods on a mocked function without errors in TypeScript**
+
+Example:
+<br/>
+```typescript
+import ModuleName from './moduleName'
+jest.mock('./moduleName')
+
+const mockedFunction = ModuleName.functionName as jest.MockedFunction<typeof ModuleName.functionName>
 ```
